@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m pytest tests/test_hello_world.py -v)",
+      "Bash(.venv/bin/python -m pytest tests/test_iss_location.py -v)",
+      "Bash(.venv/bin/python -m pytest -v)",
+      "Bash(.venv/bin/python -m pytest tests/test_failethis.py -v)"
+    ]
+  }
+}
