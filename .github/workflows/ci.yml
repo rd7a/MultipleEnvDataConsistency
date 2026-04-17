@@ -3,10 +3,21 @@ name: Test Suite
 on:
   push:
     branches:
-      - "**"        # runs on every branch; change to ["staging"] to restrict
+      - "**"
   pull_request:
     branches:
       - "**"
+  workflow_dispatch:
+    inputs:
+      env:
+        description: "Test suite to run: countries, weather, or all"
+        required: false
+        default: "all"
+        type: choice
+        options:
+          - all
+          - countries
+          - weather
 
 jobs:
   test:
@@ -33,9 +44,11 @@ jobs:
 
       # Pipeline fails automatically if exit code is non-zero (any test fails)
       - name: Run countries tests
+        if: ${{ github.event.inputs.env == 'countries' || github.event.inputs.env == 'all' || github.event.inputs.env == '' }}
         run: pytest --env countries -v --tb=short
 
       - name: Run weather tests
+        if: ${{ github.event.inputs.env == 'weather' || github.event.inputs.env == 'all' || github.event.inputs.env == '' }}
         run: pytest --env weather -v --tb=short
 
       - name: Generate Allure report
