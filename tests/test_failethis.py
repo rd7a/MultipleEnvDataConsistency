@@ -1,3 +1,6 @@
+import pytest
+
+@pytest.mark.xfail(reason="intentional failure — case-sensitive string mismatch by design")
 def test_failThisTest():
     assert "Sun" == "sun"
 
