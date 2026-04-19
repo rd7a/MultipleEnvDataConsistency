@@ -1,7 +1,8 @@
 import requests
+import logging
 
 BASE_URL = "http://api.open-notify.org/iss-now.json"
-
+logger = logging.getLogger(__name__)
 
 def get_iss():
     return requests.get(BASE_URL)
@@ -25,6 +26,12 @@ def test_latitude_key_present():
 
 
 def test_longitude_key_present():
+    r = get_iss()
+    logger.info("Response: ")
+    logger.info("%s", r.text)
+    logger.info("%s" , str(r.status_code))
+    logger.info("%s", r.headers.get("content-type"))
+    
     assert "longitude" in get_iss().json()["iss_position"]
 
 
