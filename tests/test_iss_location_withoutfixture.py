@@ -27,9 +27,10 @@ def test_latitude_key_present():
 
 def test_longitude_key_present():
     r = get_iss()
-    logger.info("Response", str(r))
-    logger.info("STATUS_CODE:" ,r.status_code)
-    logger.info("HEADERS:", r.headers.get("content-type"))
+    logger.info("Response: ")
+    logger.info("%s", r.text)
+    logger.info("%s" , str(r.status_code))
+    logger.info("%s", r.headers.get("content-type"))
     
     assert "longitude" in get_iss().json()["iss_position"]
 
