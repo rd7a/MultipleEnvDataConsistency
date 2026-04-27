@@ -1,5 +1,7 @@
 import requests
 import logging
+from http_client import get_with_retry
+from conftest import iss_config
 
 BASE_URL = "http://api.open-notify.org/iss-now.json"
 logger = logging.getLogger(__name__)

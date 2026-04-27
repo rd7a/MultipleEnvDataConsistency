@@ -1,12 +1,12 @@
-import requests
 
 BASE_URL = "http://api.open-notify.org/iss-now.json"
 
 
 # ── Positive Tests (all use session-scoped fixture — 1 HTTP call total) ───────
 
+
 def test_status_code_200(iss_response):
-    assert iss_response.status_code == 200
+    assert iss_response.status_code == 200    
 
 
 def test_message_is_success(iss_response):
@@ -31,7 +31,6 @@ def test_latitude_not_empty(iss_response):
 
 def test_longitude_not_empty(iss_response):
     assert iss_response.json()["iss_position"]["longitude"] != ""
-
 
 """
 def test_latitude_is_valid_float(iss_response):

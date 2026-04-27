@@ -2,8 +2,9 @@ import pytest
 import yaml
 from pathlib import Path
 from http_client import get_with_retry
+import logging
 
-
+logger = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 # CLI flag: --env countries | --env weather | (omit to run both)
 # ---------------------------------------------------------------------------
@@ -12,7 +13,7 @@ def pytest_addoption(parser):
         "--env",
         action="store",
         default=None,
-        choices=["countries", "weather"],
+        choices=["countries", "weather", "iss"],
         help="Run tests for a specific environment: countries or weather",
     )
 
@@ -23,13 +24,16 @@ def pytest_addoption(parser):
 # ---------------------------------------------------------------------------
 def pytest_collection_modifyitems(config, items):
     env = config.getoption("--env")
+    
     if env is None:
         return  # no filter — run everything
     skip = pytest.mark.skip(reason=f"--env={env} selected; skipping this environment")
     for item in items:
-        if env == "countries" and "weather" in item.nodeid:
+        if env == "countries" and ("weather" in item.nodeid or "iss" in item.nodeid):
             item.add_marker(skip)
-        elif env == "weather" and "countries" in item.nodeid:
+        elif env == "weather" and ("countries" in item.nodeid or "iss" in item.nodeid):
+            item.add_marker(skip)
+        elif env == "iss" and ("weather" in item.nodeid or "countries" in item.nodeid):
             item.add_marker(skip)
 
 
@@ -38,6 +42,7 @@ def pytest_collection_modifyitems(config, items):
 # ---------------------------------------------------------------------------
 def _load_env(name: str) -> dict:
     config_path = Path(__file__).parent / "config" / "environments.yaml"
+    
     with open(config_path) as f:
         return yaml.safe_load(f)[name]
 
@@ -65,3 +70,13 @@ def iss_response():
     """Single HTTP call to the ISS Now API, shared across the session.
     Retries up to 3 times on transient failures before raising."""
     return get_with_retry("http://api.open-notify.org/iss-now.json")
+
+
+# ---------------------------------------------------------------------------
+# ISS fixture kept here so tests/test_iss_location_fixture.py can still use it
+# ---------------------------------------------------------------------------
+@pytest.fixture(scope="session")
+def iss_config() -> dict:
+    """Single HTTP call to the ISS Now API, shared across the session.
+    Retries up to 3 times on transient failures before raising."""
+    return _load_env("iss")

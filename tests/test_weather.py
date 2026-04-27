@@ -12,6 +12,7 @@ from validators.weather_validator import (
     validate_temperature_range,
     validate_hourly_count,
     validate_timezone,
+    validate_elevation
 )
 
 # ---------------------------------------------------------------------------
@@ -20,6 +21,10 @@ from validators.weather_validator import (
 _cities_path = Path(__file__).parent.parent / "test_data" / "cities.json"
 with open(_cities_path) as _f:
     _cities = json.load(_f)
+
+logger.info(f"Current cities test data {_cities} ")
+for c in _cities:
+    logger.info(f"City {c['name']}")
 
 
 @allure.feature("weather")
@@ -45,6 +50,9 @@ def test_forecast(city: dict, weather_config: dict) -> None:
 
     # Timezone field must be present
     assert validate_timezone(data), f"{city['name']}: timezone field missing or empty"
+
+    #Check whether Elevation is present
+    assert validate_elevation(data), f"{city['name']}: elevation field is missing or empty"
 
     # Hourly temperature entries must exist
     assert validate_hourly_count(data), f"{city['name']}: no hourly temperature entries"

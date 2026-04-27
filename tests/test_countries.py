@@ -24,6 +24,7 @@ class TestCountries:
         response = get_with_retry(url)
         assert response.elapsed.total_seconds() < countries_config["max_response_time"]
         country = response.json()[0]
+        logger.info(f"Country info {country}")
         missing = validate_country_schema(country)
         assert not missing, f"Missing fields: {missing}"
 
@@ -42,11 +43,13 @@ class TestCountries:
         logger.info("GET %s", name_url)
         name_resp = get_with_retry(name_url)
         germany_name = name_resp.json()[0]["name"]["common"]
+        logger.info(f'germany_name : {name_resp.json()[0]["name"]["common"]}')
 
         region_url = f"{countries_config['base_url']}/region/europe"
         logger.info("GET %s", region_url)
         region_resp = get_with_retry(region_url)
         region_names = [c["name"]["common"] for c in region_resp.json()]
+        logger.info(f'region_names {[c["name"]["common"] for c in region_resp.json()]}')
 
         assert germany_name in region_names, (
             f"{germany_name} not found in /region/europe results"

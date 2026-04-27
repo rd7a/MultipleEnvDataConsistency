@@ -3,5 +3,6 @@
   {"name": "Tokyo",    "latitude": 35.6762,  "longitude": 139.6503},
   {"name": "New York", "latitude": 40.7128,  "longitude": -74.0060},
   {"name": "Sydney",   "latitude": -33.8688, "longitude": 151.2093},
-  {"name": "Cairo",    "latitude": 30.0444,  "longitude": 31.2357}
-]
+  {"name": "Cairo",    "latitude": 30.0444,  "longitude": 31.2357},
+  {"name": "MyCity",    "latitude": 0.0,  "longitude": 0.0}
+  ]

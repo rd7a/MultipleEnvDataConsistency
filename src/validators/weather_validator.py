@@ -1,10 +1,13 @@
 from typing import Any
+import logging
 
 TEMP_MIN: float = -80.0
 TEMP_MAX: float = 60.0
 
+logger = logging.getLogger(__name__)
 
 def validate_temperature_range(temperatures: list[float | None]) -> list[float]:
+    logger.info(f'Temperatures to validate {temperatures}')
     """Returns temperatures that fall outside the acceptable range."""
     return [t for t in temperatures if t is not None and not (TEMP_MIN <= t <= TEMP_MAX)]
 
@@ -17,3 +20,8 @@ def validate_hourly_count(data: dict[str, Any]) -> bool:
 def validate_timezone(data: dict[str, Any]) -> bool:
     """Returns True if timezone field is present and non-empty."""
     return bool(data.get("timezone"))
+
+def validate_elevation(data: dict[str, Any]) -> bool:
+    """Returns true if elevation field is present and non empty"""
+    logger.info(f'elevation : {data.get("elevation")}')
+    return bool(data.get("elevation"))

@@ -7,3 +7,8 @@ weather:
   base_url: https://api.open-meteo.com/v1
   max_response_time: 3.0
   min_results_count: 1
+
+iss:
+  base_url: http://api.open-notify.org/iss-now.json
+  max_response_time: 5.0
+  min_results_count: 1

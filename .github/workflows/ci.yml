@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
     inputs:
       env:
-        description: "Test suite to run: countries, weather, or all"
+        description: "Test suite to run: countries, weather, iss or all"
         required: false
         default: "all"
         type: choice
@@ -18,6 +18,9 @@ on:
           - all
           - countries
           - weather
+          - iss
+  schedule:
+      - cron: "0 8 * * *"   # Runs daily at 08:00 UTC (~1 AM PST / 2 AM PDT)      
 
 jobs:
   test:
@@ -44,7 +47,8 @@ jobs:
 
       # Pipeline fails automatically if exit code is non-zero (any test fails)
       - name: Run all tests
-        if: ${{ github.event.inputs.env == 'all' || github.event_name != 'workflow_dispatch' }}
+  
+        if: ${{ github.event.inputs.env == 'all' || github.event.inputs.env != 'workflow_dispatch' }}
         run: pytest -v --tb=short
 
       - name: Run countries tests
@@ -54,6 +58,10 @@ jobs:
       - name: Run weather tests
         if: ${{ github.event.inputs.env == 'weather' }}
         run: pytest --env weather -v --tb=short
+
+      - name: Run iss tests
+        if: ${{ github.event.inputs.env == 'iss' }}
+        run: pytest --env iss -v --tb=short  
 
       - name: Generate Allure report
         if: always()

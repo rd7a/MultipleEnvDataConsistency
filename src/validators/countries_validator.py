@@ -1,7 +1,7 @@
 from typing import Any
 
 # Fields every country object must contain for schema validation
-REQUIRED_FIELDS: list[str] = ["name", "capital", "population", "currencies", "languages"]
+REQUIRED_FIELDS: list[str] = ["name", "capital", "population", "currencies", "languages", 'capitalInfo']
 
 
 def validate_country_schema(country: dict[str, Any]) -> list[str]:
