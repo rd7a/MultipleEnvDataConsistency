@@ -7,10 +7,8 @@ TEMP_MAX: float = 60.0
 logger = logging.getLogger(__name__)
 
 def validate_temperature_range(temperatures: list[float | None]) -> list[float]:
-    logger.info(f'Temperatures to validate {temperatures}')
     """Returns temperatures that fall outside the acceptable range."""
     return [t for t in temperatures if t is not None and not (TEMP_MIN <= t <= TEMP_MAX)]
-
 
 def validate_hourly_count(data: dict[str, Any]) -> bool:
     """Returns True if hourly temperature entries are present."""

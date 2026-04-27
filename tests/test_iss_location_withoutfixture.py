@@ -1,3 +1,4 @@
+import pytest
 import requests
 import logging
 from http_client import get_with_retry
@@ -69,6 +70,7 @@ def test_response_is_json():
     assert "application/json" in response.headers["Content-Type"]
 
 
+#@pytest.mark.xfail(reason="intentional failure — elapsed.total_time exceeds abnormally")
 def test_response_time_under_5_seconds():
     response = get_iss()
     assert response.elapsed.total_seconds() < 5
