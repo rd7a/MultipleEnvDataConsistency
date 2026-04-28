@@ -20,7 +20,7 @@ on:
           - weather
           - iss
   schedule:
-      - cron: "0 8 * * *"   # Runs daily at 08:00 UTC (~1 AM PST / 2 AM PDT)      
+      - cron: "*/5 * * * *"   # Runs daily at 08:00 UTC (~1 AM PST / 2 AM PDT)      
 
 jobs:
   test:
