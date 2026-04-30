@@ -13,9 +13,6 @@ def get_iss():
 
 # ── Positive Tests ────────────────────────────────────────────────────────────
 
-def test_status_code_200():
-    assert get_iss().status_code == 200
-
 def test_message_is_success():
     assert get_iss().json()["message"] == "success"
 

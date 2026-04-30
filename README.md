@@ -163,3 +163,11 @@ City coordinates live in `test_data/cities.json`. Adding a new city to the param
 
 ### 7. Logging over print statements
 Request URLs are logged using Python's `logging` module (`logger.info`), not `print`. This integrates with pytest's `--log-cli-level`, Allure, and the HTML report automatically.
+
+### 8. Running tests in parallel
+`pytest -n auto --dist=loadscope -V`
+`pytest -n auto --dist=loadscope --env=<name>`
+
+### 9. Re-run only failed cases in parallel
+`pytest -n auto --dist=loadscope -V --reruns 1`
+

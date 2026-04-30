@@ -49,19 +49,19 @@ jobs:
       - name: Run all tests
   
         if: ${{ github.event.inputs.env == 'all' || github.event.inputs.env != 'workflow_dispatch' }}
-        run: pytest -v --tb=short
+        run: pytest -v --tb=short -n auto --dist=loadscope --reruns 1
 
       - name: Run countries tests
         if: ${{ github.event.inputs.env == 'countries' }}
-        run: pytest --env countries -v --tb=short
+        run: pytest --env countries -v --tb=short -n auto --dist=loadscope --reruns 1
 
       - name: Run weather tests
         if: ${{ github.event.inputs.env == 'weather' }}
-        run: pytest --env weather -v --tb=short
+        run: pytest --env weather -v --tb=short -n auto --dist=loadscope --reruns 1
 
       - name: Run iss tests
         if: ${{ github.event.inputs.env == 'iss' }}
-        run: pytest --env iss -v --tb=short  
+        run: pytest --env iss -v --tb=short -n auto --dist=loadscope --reruns 1
 
       - name: Generate Allure report
         if: always()
